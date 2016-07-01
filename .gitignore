@@ -91,5 +91,3 @@ ENV/
 # Pycharm
 /.idea
 
-# Test
-/gradlepy/test/data/.gradle
