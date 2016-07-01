@@ -4,7 +4,7 @@ python:
 - '3.4'
 - '3.5'
 before_install:
-- sudo add-apt-repository ppa:cwchien/gradle
+- sudo add-apt-repository ppa:cwchien/gradle -y
 - sudo apt-get update
 - sudo apt-get install gradle
 install:
