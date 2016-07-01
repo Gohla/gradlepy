@@ -56,7 +56,7 @@ class Gradle(object):
     # Must occur before --data-file, for some reason. Gradle bug?
     if self.noNative:
       # Based on this: https://github.com/adammurdoch/native-platform/issues/6#issuecomment-41315984
-      args.append('-Dorg.gradlepy.native=false')
+      args.append('-Dorg.gradle.native=false')
 
     if buildFile:
       args.append('--data-file "{}"'.format(buildFile))
@@ -108,6 +108,6 @@ class Gradle(object):
   @staticmethod
   def __find_gradle():
     if platform.system() == 'Windows':
-      return which('gradlepy') or which('gradlepy.bat')
+      return which('gradle') or which('gradle.bat')
     else:
-      return which('gradlepy')
+      return which('gradle')
