@@ -1,5 +1,4 @@
 import os
-import platform
 import subprocess
 from shutil import which
 
@@ -38,15 +37,11 @@ class Gradle(object):
 
     if self.useWrapper:
       searchPath = cwd or os.getcwd()
-      if platform.system() == 'Windows':
-        path = which('gradlew', searchPath) or which('gradlew.bat', searchPath) or which('gradlew') or which(
-          'gradlew.bat')
-      else:
-        path = which('gradlew', searchPath) or which('gradlew')
+      path = which('gradlew', path=searchPath) or which('gradlew')
       if not path and self.fallbackToInstalled:
-        path = Gradle.__find_gradle()
+        path = which('gradle')
     else:
-      path = Gradle.__find_gradle()
+      path = which('gradle')
 
     if path:
       args.append(path)
@@ -104,10 +99,3 @@ class Gradle(object):
         raise RuntimeError("Gradle run failed")
     except KeyboardInterrupt:
       raise RuntimeError("Gradle run interrupted")
-
-  @staticmethod
-  def __find_gradle():
-    if platform.system() == 'Windows':
-      return which('gradle') or which('gradle.bat')
-    else:
-      return which('gradle')
