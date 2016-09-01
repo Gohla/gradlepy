@@ -24,6 +24,7 @@ class Gradle(object):
 
     self.noNative = False
 
+    self.opts = None
     self.env = {}
 
   def run_in_dir(self, cwd, *extraTargets, **extraProperties):
@@ -88,10 +89,15 @@ class Gradle(object):
       args.extend(self.extraArgs)
 
     env = os.environ.copy()
+    if self.opts:
+        env['GRADLE_OPTS'] = self.opts
     env.update(self.env)
 
     cmd = ' '.join(args)
-    print(cmd)
+    if self.opts:
+      print('GRADLE_OPTS="{}" {}'.format(self.opts, cmd))
+    else:
+      print(cmd)
     try:
       process = subprocess.Popen(cmd, cwd=cwd, env=env, shell=True)
       process.communicate()
