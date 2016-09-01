@@ -16,6 +16,7 @@ class Gradle(object):
     self.mavenLocalRepo = None
 
     self.offline = False
+    self.daemon = None
 
     self.debug = False
     self.stacktrace = False
@@ -64,6 +65,11 @@ class Gradle(object):
 
     if self.offline:
       args.append('--offline')
+    # self.daemon = { True | False | None }
+    if self.daemon == True:
+      args.append('--daemon')
+    elif self.daemon == False:
+      args.append('--no-daemon')
 
     if self.debug:
       args.append('--debug')
