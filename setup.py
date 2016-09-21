@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
   name='gradlepy',
-  version='0.1.1',
+  version='0.1.2',
   description='Wrapper for calling Gradle from Python',
   url='http://github.com/Gohla/gradlepy',
   author='Gabriel Konat',
