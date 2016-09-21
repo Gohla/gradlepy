@@ -16,6 +16,7 @@ class Gradle(object):
     self.mavenLocalRepo = None
 
     self.offline = False
+    self.daemon = None
 
     self.debug = False
     self.stacktrace = False
@@ -24,6 +25,7 @@ class Gradle(object):
 
     self.noNative = False
 
+    self.opts = None
     self.env = {}
 
   def run_in_dir(self, cwd, *extraTargets, **extraProperties):
@@ -63,6 +65,11 @@ class Gradle(object):
 
     if self.offline:
       args.append('--offline')
+    # self.daemon = { True | False | None }
+    if self.daemon == True:
+      args.append('--daemon')
+    elif self.daemon == False:
+      args.append('--no-daemon')
 
     if self.debug:
       args.append('--debug')
@@ -88,10 +95,15 @@ class Gradle(object):
       args.extend(self.extraArgs)
 
     env = os.environ.copy()
+    if self.opts:
+        env['GRADLE_OPTS'] = self.opts
     env.update(self.env)
 
     cmd = ' '.join(args)
-    print(cmd)
+    if self.opts:
+      print('GRADLE_OPTS="{}" {}'.format(self.opts, cmd))
+    else:
+      print(cmd)
     try:
       process = subprocess.Popen(cmd, cwd=cwd, env=env, shell=True)
       process.communicate()
